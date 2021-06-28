@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
-
+//hei ka faen
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page_test/workouts/map_with_mapbox/config_helper.dart';
@@ -11,7 +11,9 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 
 const ApiKey = 'xxxx';
+const x = 1;
 
+//ka faen
 class MapWidgetPage extends StatelessWidget {
   static const mapWidgetPageName = '/Mapwidgetpage';
   StaticImage staticImage = StaticImage(apiKey: ApiKey);
