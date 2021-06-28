@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:profile_page_test/profile/profile_page.dart';
+import 'package:profile_page_test/profile/make_profile_page.dart';
+import 'package:profile_page_test/workouts/map_with_mapbox/map_widget_page.dart';
 import 'package:profile_page_test/workouts/workout_page.dart';
 import 'package:profile_page_test/your_page/side_bar.dart';
 import 'your_page/bottomButtons/bottomButtons.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       routes: {
         WorkoutPage.workoutName: (ctx) => WorkoutPage(),
         ProfilePage.profilePageName: (ctx) => ProfilePage(),
+        MapWidgetPage.mapWidgetPageName: (ctx) => MapWidgetPage(),
       },
     );
   }

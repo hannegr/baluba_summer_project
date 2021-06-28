@@ -10,6 +10,8 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>Viser din plassering på kartet for å lettere velge hvor du vil ha øktene dine</string>
 	<key>CFBundleName</key>
 	<string>profile_page_test</string>
 	<key>CFBundlePackageType</key>
@@ -26,6 +28,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs access to location when open.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>This app needs access to location when in the background.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

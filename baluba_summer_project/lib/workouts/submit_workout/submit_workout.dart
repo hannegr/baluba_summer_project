@@ -1,16 +1,19 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mapbox_search/mapbox_search.dart';
+import 'package:profile_page_test/workouts/map_with_mapbox/map_widget_page.dart';
 import 'package:profile_page_test/workouts/workouts.dart';
 import 'package:flutter/foundation.dart';
+import '../submit_workout/submit_workout_functions.dart';
 
 void submitData(var workoutTitleInput, var locationInput, var maxNumberInput,
     var startTime, var endTime, var date, var description) {
   final workoutTitle = workoutTitleInput.text;
   final location = locationInput.text;
   final maxNumber = int.parse(maxNumberInput.text);
-  final startT = DateFormat.Hm().format(startTime);
-  final endT = DateFormat.Hm().format(endTime);
+  //final startT = DateFormat.Hm().format(startTime);
+  //final endT = DateFormat.Hm().format(endTime);
 
   if (workoutTitle.isEmpty || location.isEmpty || maxNumber < 0) {
     /*   ||
@@ -23,99 +26,16 @@ void submitData(var workoutTitleInput, var locationInput, var maxNumberInput,
   //Navigator.of(context).pop();
 }
 
-class SubmitFunctions {
-  Widget setInputDate(
-      DateTime dateOrTime,
-      var dateTimeFormat,
-      BuildContext ctx,
-      Icon icon,
-      VoidCallback changeDateTimeFunction,
-      String chosenDateTime,
-      String chooseDateTime) {
-    return Container(
-      height: 70,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              //_selectedDate == null
-              //? 'No date chosen'
-              chosenDateTime +
-                  ' ${dateTimeFormat(dateOrTime)}', // DateFormat.yMd().format //Icons.date_range
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          TextButton(
-            child: Text(
-              chooseDateTime,
-              style: TextStyle(color: Colors.green),
-            ),
-            onPressed: changeDateTimeFunction,
-          ),
-          IconButton(
-            iconSize: 50,
-            onPressed: changeDateTimeFunction,
-            icon: icon,
-            color: Colors.green,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget setInputTime(
-      TimeOfDay dateOrTime,
-      BuildContext ctx,
-      Icon icon,
-      VoidCallback changeDateTimeFunction,
-      String chosenDateTime,
-      String chooseDateTime) {
-    return Container(
-      height: 70,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              //_selectedDate == null
-              //? 'No date chosen'
-              chosenDateTime +
-                  ' ${(dateOrTime.format(ctx))}', // DateFormat.yMd().format //Icons.date_range
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          TextButton(
-            child: Text(
-              chooseDateTime,
-              style: TextStyle(color: Colors.green),
-            ),
-            onPressed: changeDateTimeFunction,
-          ),
-          IconButton(
-            iconSize: 50,
-            onPressed: changeDateTimeFunction,
-            icon: icon,
-            color: Colors.green,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class SubmitWorkout extends StatefulWidget {
   @override
   SubmitWorkoutState createState() => SubmitWorkoutState();
 }
 
 class SubmitWorkoutState extends State<SubmitWorkout> {
+  var placesSearch = PlacesSearch(
+    apiKey: ApiKey,
+    limit: 5,
+  );
   final workoutTitleInput = TextEditingController();
   final locationInput =
       TextEditingController(); //vil endres når location fikses vha maps
@@ -161,7 +81,6 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
         return;
       }
       setState(() {
-        //ta dette med senere når du har statefulWidget hehe
         startTime = selectedTime;
       });
     });
@@ -175,7 +94,6 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
         return;
       }
       setState(() {
-        //ta dette med senere når du har statefulWidget hehe
         endTime = selectedTime;
       });
     });
@@ -200,6 +118,32 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
           ),
           SizedBox(height: 5),
           TextField(
+            onChanged: (String s) {
+              placesSearch.getPlaces(locationInput.text);
+            },
+            controller: locationInput,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(), labelText: 'Maks antall'),
+            style: TextStyle(
+              fontSize: 18,
+            ),
+            onSubmitted: (_) {},
+            //keyboardType: TextInputType.number,
+          ),
+          Container(
+            width: double.infinity,
+            height: 100,
+            child: TextButton(
+              onPressed: () => SubmitFunctions.goToMapsPage(context),
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: Colors.green,
+                //onSurface: Colors.grey,
+              ),
+              child: Text('Plassering', style: TextStyle(fontSize: 30)),
+            ),
+          ),
+          /*TextField(
             /* onChanged: (value) => titleInput = value, */
             controller: locationInput,
             decoration: InputDecoration(
@@ -210,7 +154,7 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
             autocorrect: true,
             onSubmitted: (_) => {},
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 5),*/
           TextField(
             /* onChanged: (value) {
                         amountInput = value;

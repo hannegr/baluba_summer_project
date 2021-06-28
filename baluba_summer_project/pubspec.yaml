@@ -24,8 +24,12 @@ dependencies:
   sqflite: ^2.0.0+3
   intl: ^0.17.0
   image_picker: ^0.8.0+3
+  http: ^0.13.3
   path_provider: ^2.0.2
   provider: ^5.0.0
+  mapbox_gl: ^0.11.0
+  location: ^4.3.0
+  latlng: ^0.1.0
   flutter:
     sdk: flutter
 
@@ -33,6 +37,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  geolocator: ^7.2.0+1
+  geocoder: ^0.2.1
+  mapbox_search: ^2.1.0+1
+  mapbox_search_flutter: ^1.0.6+1
 
 dev_dependencies:
   flutter_test:
@@ -96,3 +104,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets: 
+  - assets/config.json

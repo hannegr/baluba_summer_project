@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
+import 'package:profile_page_test/profile/save_image_sql.dart';
 
 class ImageInput extends StatefulWidget {
   final Function onSelectImage;
@@ -11,6 +12,8 @@ class ImageInput extends StatefulWidget {
   @override
   _ImageInputState createState() => _ImageInputState();
 }
+
+//Code is copied from a video hehe
 
 class _ImageInputState extends State<ImageInput> {
   File? _storedImage;
@@ -25,7 +28,8 @@ class _ImageInputState extends State<ImageInput> {
       return;
     }
     setState(() {
-      _storedImage = imageFile as File;
+      _storedImage = File(imageFile.path);
+      DBHelper.insertIntoDatabase('pics', {'id': 1, 'image': _storedImage!});
     });
     final appDir = await syspaths
         .getApplicationDocumentsDirectory(); //this is where we can store data.
@@ -43,13 +47,20 @@ class _ImageInputState extends State<ImageInput> {
       return;
     }
     setState(() {
-      _storedImage = imageFile as File;
+      _storedImage = File(imageFile.path);
+      print('hello');
     });
     final appDir = await syspaths
         .getApplicationDocumentsDirectory(); //this is where we can store data.
     final fileName = path.basename(imageFile.path);
     final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
     widget.onSelectImage(savedImage);
+    DBHelper.insertIntoDatabase('pics', {'id': 1, 'image': _storedImage!});
+  }
+
+  File fileNamePicture() {
+    File image = _storedImage!;
+    return image;
   }
 
   @override
@@ -77,26 +88,41 @@ class _ImageInputState extends State<ImageInput> {
         SizedBox(
           height: 10,
         ),
-        Flexible(
-          child: TextButton.icon(
-            onPressed: _findPicture,
-            icon: Icon(Icons.image),
-            label: Text(
-              'Velg profilbilde',
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
+        Container(
+          height: 100,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: TextButton.icon(
+                  onPressed: _findPicture,
+                  icon: Icon(
+                    Icons.image,
+                    color: Colors.green,
+                  ),
+                  label: Text(
+                    'Velg profilbilde',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextButton.icon(
+                  onPressed: _takePicture,
+                  icon: Icon(
+                    Icons.camera,
+                    color: Colors.green,
+                  ),
+                  label: Text(
+                    'Ta profilbilde',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        Flexible(
-          child: TextButton.icon(
-            onPressed: _takePicture,
-            icon: Icon(Icons.camera),
-            label: Text(
-              'Ta profilbilde',
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-          ),
-        )
       ],
     );
   }

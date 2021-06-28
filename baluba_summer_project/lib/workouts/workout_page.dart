@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:profile_page_test/workouts/submit_workout.dart';
+import 'package:profile_page_test/workouts/submit_workout/submit_workout.dart';
 
 class WorkoutPage extends StatelessWidget {
   static const workoutName = '/workouts';
