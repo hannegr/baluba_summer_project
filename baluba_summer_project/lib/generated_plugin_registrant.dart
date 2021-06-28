@@ -7,7 +7,6 @@
 import 'package:geolocator_web/geolocator_web.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:location_web/location_web.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:mapbox_gl_web/mapbox_gl_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
