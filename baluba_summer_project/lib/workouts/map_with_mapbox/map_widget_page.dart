@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
+import 'package:color/color.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,12 @@ const ApiKey = 'xxxx';
 class MapWidgetPage extends StatelessWidget {
   static const mapWidgetPageName = '/Mapwidgetpage';
   StaticImage staticImage = StaticImage(apiKey: ApiKey);
+  String? currentAddress;
+  MapboxMapController? globalController;
 
   var reverseGeoCoding = ReverseGeoCoding(
     apiKey: ApiKey,
+    //country: "NO",
     limit: 5,
   );
 
@@ -52,6 +56,7 @@ class MapWidgetPage extends StatelessWidget {
                     CameraPosition(zoom: 15.0, target: location),
                   ),
                 );
+                globalController = controller;
                 if (animateCameraResult) {
                   print('works');
                   controller.addCircle(
@@ -68,17 +73,35 @@ class MapWidgetPage extends StatelessWidget {
                 }
               },
               onMapClick: (Point<double> point, LatLng latLng) async {
+                final animateCameraResult =
+                    await globalController!.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(zoom: 15.0, target: latLng),
+                  ),
+                );
                 Location coordinates = new Location();
                 coordinates.lat = latLng.latitude;
                 coordinates.lng = latLng.longitude;
                 var address = await reverseGeoCoding.getAddress(coordinates);
-                print(latLng);
-                print(address[0].toString());
+                print(latLng); //riktige koordinater
+                currentAddress = address[0].toString();
+                print(address[0]
+                    .toString()); //blir en tom liste hmm ble feil siden jeg tok Country norway XD
+                if (animateCameraResult) {
+                  globalController!.addSymbol(
+                    (SymbolOptions(
+                      geometry: LatLng(coordinates.lat, coordinates.lng),
+                      iconImage: "assets\\images\\location_pin.png",
+                      iconSize: 30,
+                    )),
+                  );
+                }
 
-                /*staticImage.getStaticUrlWithMarker(
+                staticImage.getStaticUrlWithMarker(
                   center: coordinates,
                   marker: MapBoxMarker(
-                      markerColor:  Color.rgb(0, 0, 0),
+                      markerColor:
+                          Color.rgb(0, 0, 0) as RgbColor, //Color.rgb(0, 0, 0),
                       markerLetter: 'h',
                       markerSize: MarkerSize.LARGE),
                   height: 300,
@@ -87,7 +110,6 @@ class MapWidgetPage extends StatelessWidget {
                   render2x: true,
                 );
                 staticImage == null ? print('error!') : print('yes');
-              },*/
               },
             );
           }
