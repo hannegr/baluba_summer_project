@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile_page_test/profile/finished_profile_page.dart';
 import 'package:profile_page_test/profile/image_input.dart';
+import 'package:sqflite/sqflite.dart' as sql;
 
 import 'dart:io';
+
+import 'package:profile_page_test/profile/save_image_sql.dart';
 
 //import 'package:profile_page_test/profile/save_image_sql.dart';
 
@@ -21,12 +24,17 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _sendDataToProfilePage(
-    BuildContext context,
-    TextEditingController nameInput,
-    TextEditingController locationInput,
-    TextEditingController descriptionInput,
-    File image,
-  ) {
+      BuildContext context,
+      TextEditingController nameInput,
+      TextEditingController locationInput,
+      TextEditingController descriptionInput) async {
+    print('svarte');
+    //var imageData = await DBHelper.getData(DBHelper.tableName);
+    DBHelper.getData(DBHelper.tableName);
+    //File imageText = await imageData[0][
+    //   'image']; //Denne gir en null-verdi. Hvordan skal jeg vite hvor den skal settes?
+    //print(imageText);
+
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -34,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
             name: nameInput.text,
             location: locationInput.text,
             description: descriptionInput.text,
-            imageFile: image,
+            //imageFile: imageText,
           ),
         ));
   }
@@ -122,15 +130,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 backgroundColor: Colors.green,
                 //onSurface: Colors.grey,
               ),
-              onPressed: () {},
-              /*=> _sendDataToProfilePage(
+              onPressed: () => _sendDataToProfilePage(
                 context,
                 nameInput,
                 locationInput,
                 descriptionInput,
-                ImageInput.fileNamePicture, // FINN UT HVA SOM SKAL VÆRE HER! 
               ), //lagre profilen i en eller annen database
-              */
+
               child: Text(
                 'Lagre din profil',
                 style: TextStyle(

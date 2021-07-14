@@ -60,6 +60,7 @@ class SideBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 buildListTile('Utforsk', Icons.search, () {}, context),
+                buildListTile('Dine økter', Icons.sports, () {}, context),
                 buildListTile(
                     'Finn venner', Icons.person_search, () {}, context),
                 buildListTile('Innstillinger', Icons.settings, () {}, context),

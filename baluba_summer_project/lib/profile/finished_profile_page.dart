@@ -7,12 +7,13 @@ class FinishedProfilePage extends StatelessWidget {
   final String name;
   final String location;
   final String description;
-  final File imageFile;
-  FinishedProfilePage(
-      {required this.name,
-      required this.location,
-      required this.description,
-      required this.imageFile});
+  //final File imageFile;
+  FinishedProfilePage({
+    required this.name,
+    required this.location,
+    required this.description,
+  });
+  //required this.imageFile});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +23,21 @@ class FinishedProfilePage extends StatelessWidget {
       body: Row(
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              child: CircleAvatar(
-                minRadius: 60.0,
-                child: Image.file(imageFile,
-                    fit: BoxFit.cover, width: double.infinity),
-              ))
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            child: CircleAvatar(
+              minRadius: 60.0,
+              child: Title(
+                child: Text(name + location + description),
+                color: Colors.blue,
+              ),
+              /*child: Image.file(imageFile,
+                  fit: BoxFit.cover, width: double.infinity),
+                  */
+            ),
+          ),
+          Container(
+            child: Text(location),
+          ),
         ],
       ),
     );

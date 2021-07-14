@@ -48,19 +48,15 @@ class _ImageInputState extends State<ImageInput> {
     }
     setState(() {
       _storedImage = File(imageFile.path);
-      print('hello');
     });
     final appDir = await syspaths
         .getApplicationDocumentsDirectory(); //this is where we can store data.
     final fileName = path.basename(imageFile.path);
     final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
     widget.onSelectImage(savedImage);
-    DBHelper.insertIntoDatabase('pics', {'id': 1, 'image': _storedImage!});
-  }
-
-  File fileNamePicture() {
-    File image = _storedImage!;
-    return image;
+    DBHelper.database();
+    DBHelper.insertIntoDatabase(
+        DBHelper.tableName, {'id': 0, 'image': _storedImage!});
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
 
 class DBHelper {
+  static String tableName = 'pics';
   //insert_into_database will
   // - get a location using getDatabasesPath
   // - open it
@@ -12,10 +13,9 @@ class DBHelper {
 
   static Future<sql.Database> database() async {
     final dbPath = await sql.getDatabasesPath();
-    return sql.openDatabase(path.join(dbPath, 'places.db'),
+    return sql.openDatabase(path.join(dbPath, 'profile.db'),
         onCreate: (db, version) {
-      return db.execute(
-          'CREATE TABLE user_places(id TEXT PRIMARY KEY, title TEXT, image TEXT)');
+      return db.execute('CREATE TABLE $tableName (id TEXT,  image TEXT)');
     }, version: 1);
   }
 
@@ -31,6 +31,11 @@ class DBHelper {
 
   static Future<List<Map<String, dynamic>>> getData(String table) async {
     final db = await DBHelper.database();
+    var q = await db.query(table);
+    q.forEach((element) {
+      print(element);
+    });
+
     return db.query(table);
   }
 }
