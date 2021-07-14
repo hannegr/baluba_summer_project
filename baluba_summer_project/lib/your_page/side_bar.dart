@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:profile_page_test/profile/make_profile_page.dart';
+import 'package:profile_page_test/user_authentication/log_in.dart';
 
 class SideBar extends StatelessWidget {
   void _goToProfilePage(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
       ProfilePage.profilePageName,
+      //arguments: { kanskje senere
+      //},
+    );
+  }
+
+  void _goToLoginPage(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      LoginPage.LoginPageName,
       //arguments: { kanskje senere
       //},
     );
@@ -69,6 +78,8 @@ class SideBar extends StatelessWidget {
               ],
             ),
             buildListTile('Logg ut', Icons.logout, () {}, context),
+            buildListTile('Logg inn', Icons.person,
+                () => _goToLoginPage(context), context),
           ],
         ),
       ),

@@ -1,3 +1,5 @@
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page_test/profile/make_profile_page.dart';
@@ -7,8 +9,11 @@ import 'package:profile_page_test/make_workouts/workout_page.dart';
 import 'package:profile_page_test/your_page/side_bar.dart';
 import 'your_page/bottomButtons/bottomButtons.dart';
 import './your_page/side_bar.dart';
+import 'package:profile_page_test/user_authentication/log_in.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -46,6 +51,7 @@ class MyApp extends StatelessWidget {
         ProfilePage.profilePageName: (ctx) => ProfilePage(),
         MapWidgetPage.mapWidgetPageName: (ctx) => MapWidgetPage(),
         SearchForPlaceScreen.placeSearchPage: (ctx) => SearchForPlaceScreen(),
+        LoginPage.LoginPageName: (ctx) => LoginPage(),
       },
     );
   }

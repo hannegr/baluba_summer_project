@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "250961071877",
+    "project_id": "baluba-summer-project",
+    "storage_bucket": "baluba-summer-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250961071877:android:5d2c7e10875ba99543316c",
+        "android_client_info": {
+          "package_name": "com.example.baluba_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250961071877-p1faca058slqomiqvksmdd6ipmaor4t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDx-hUFsZNQCi-XTmItG6apcQmWj91ntM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250961071877-p1faca058slqomiqvksmdd6ipmaor4t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250961071877:android:e43894caffed24a743316c",
+        "android_client_info": {
+          "package_name": "com.example.bare_auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250961071877-p1faca058slqomiqvksmdd6ipmaor4t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDx-hUFsZNQCi-XTmItG6apcQmWj91ntM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250961071877-p1faca058slqomiqvksmdd6ipmaor4t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250961071877:android:48207f2cb5de2a6043316c",
+        "android_client_info": {
+          "package_name": "com.example.profile_page_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250961071877-p1faca058slqomiqvksmdd6ipmaor4t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDx-hUFsZNQCi-XTmItG6apcQmWj91ntM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250961071877-p1faca058slqomiqvksmdd6ipmaor4t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
