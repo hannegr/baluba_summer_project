@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profile_page_test/make_workouts/workout_page.dart';
+import 'package:profile_page_test/workouts/make_workouts/workout_page.dart';
 
 class BottomButtons extends StatefulWidget {
   @override

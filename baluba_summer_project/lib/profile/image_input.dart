@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
-import 'package:profile_page_test/profile/save_image_sql.dart';
 
 class ImageInput extends StatefulWidget {
   final Function onSelectImage;
-  ImageInput(this.onSelectImage);
+  ImageInput(
+    this.onSelectImage,
+  );
 
   @override
   _ImageInputState createState() => _ImageInputState();
@@ -18,6 +21,8 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   File? _storedImage;
   final picker = ImagePicker();
+  final _storage = FirebaseStorage.instance;
+  String? _imageUrl;
 
   Future<void> _findPicture() async {
     final imageFile = await picker.getImage(
@@ -25,17 +30,21 @@ class _ImageInputState extends State<ImageInput> {
       maxWidth: 600,
     );
     if (imageFile == null) {
+      print('Bilde ble ikke funnet. Prøv igjen.');
       return;
     }
+
     setState(() {
       _storedImage = File(imageFile.path);
-      DBHelper.insertIntoDatabase('pics', {'id': 1, 'image': _storedImage!});
     });
     final appDir = await syspaths
         .getApplicationDocumentsDirectory(); //this is where we can store data.
     final fileName = path.basename(imageFile.path);
     final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
     widget.onSelectImage(savedImage);
+    await FirebaseAuth.instance
+        .signInAnonymously(); //vil fjerne denne når brukere signer inn selv. Må da
+    //oppdatere reglene på når en bruker er innlogget i firebase mtp lov til å gjøre ting osv.
   }
 
   Future<void> _takePicture() async {
@@ -43,20 +52,32 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
+
     if (imageFile == null) {
       return;
     }
-    setState(() {
-      _storedImage = File(imageFile.path);
-    });
+    _storedImage = File(imageFile.path);
+
     final appDir = await syspaths
         .getApplicationDocumentsDirectory(); //this is where we can store data.
     final fileName = path.basename(imageFile.path);
     final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
     widget.onSelectImage(savedImage);
-    DBHelper.database();
-    DBHelper.insertIntoDatabase(
-        DBHelper.tableName, {'id': 0, 'image': _storedImage!});
+
+    var uploadPic = await _storage
+        .ref()
+        .child('user_image')
+        .child('pic'
+            //userCredentials.user.uid + //vil ha dette med når vi har brukerid
+            '.jpg')
+        .putFile(_storedImage);
+
+    var downloadUrl = await uploadPic.ref.getDownloadURL();
+
+    setState(() {
+      _storedImage = File(imageFile.path);
+      _imageUrl = downloadUrl;
+    });
   }
 
   @override

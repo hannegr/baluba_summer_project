@@ -1,4 +1,5 @@
 //import 'dart:html';
+/*
 
 //import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -39,3 +40,4 @@ class DBHelper {
     return db.query(table);
   }
 }
+*/

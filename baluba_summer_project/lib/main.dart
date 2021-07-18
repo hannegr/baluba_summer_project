@@ -3,10 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page_test/profile/make_profile_page.dart';
-import 'package:profile_page_test/make_workouts/map_with_mapbox/map_widget_page.dart';
-import 'package:profile_page_test/make_workouts/map_with_mapbox/search_for_place.dart';
-import 'package:profile_page_test/make_workouts/workout_page.dart';
+
 import 'package:profile_page_test/your_page/side_bar.dart';
+import 'workouts/make_workouts/map_with_mapbox/map_widget_page.dart';
+import 'workouts/make_workouts/map_with_mapbox/search_for_place.dart';
+import 'workouts/make_workouts/workout_page.dart';
 import 'your_page/bottomButtons/bottomButtons.dart';
 import './your_page/side_bar.dart';
 import 'package:profile_page_test/user_authentication/log_in.dart';

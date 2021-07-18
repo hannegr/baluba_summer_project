@@ -1,17 +1,17 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:quiver/strings.dart';
 //import 'package:profile_page_test/profile/image_input.dart';
 
-import 'dart:io';
-
 class FinishedProfilePage extends StatelessWidget {
-  final String name;
   final String location;
   final String description;
-  //final File imageFile;
+  final String profileImage;
   FinishedProfilePage({
-    required this.name,
     required this.location,
     required this.description,
+    required this.profileImage,
   });
   //required this.imageFile});
   @override
@@ -20,23 +20,37 @@ class FinishedProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Min profil'),
       ), //add action in appbar and a button where you can change your profile or something.
-      body: Row(
+      body: Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-            child: CircleAvatar(
-              minRadius: 60.0,
-              child: Title(
-                child: Text(name + location + description),
-                color: Colors.blue,
+            child: Container(
+              alignment: Alignment.center,
+              height: 300,
+              width: MediaQuery.of(context).size.width - 10,
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                child: Image(
+                  image: NetworkImage(profileImage),
+                ),
               ),
-              /*child: Image.file(imageFile,
-                  fit: BoxFit.cover, width: double.infinity),
-                  */
             ),
+            /*child: CircleAvatar(
+              minRadius: 60.0,
+              backgroundImage: NetworkImage(profileImage),
+            ),
+            */
           ),
           Container(
             child: Text(location),
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Container(
+            child: Text(description),
           ),
         ],
       ),

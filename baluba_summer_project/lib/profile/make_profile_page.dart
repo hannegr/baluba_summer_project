@@ -1,17 +1,21 @@
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:profile_page_test/profile/finished_profile_page.dart';
-import 'package:profile_page_test/profile/image_input.dart';
-import 'package:sqflite/sqflite.dart' as sql;
 
 import 'dart:io';
 
-import 'package:profile_page_test/profile/save_image_sql.dart';
+import 'package:profile_page_test/profile/finished_profile_page.dart';
+import 'package:profile_page_test/profile/image_input.dart';
+import 'package:profile_page_test/workouts/sports/sport_types.dart';
 
 //import 'package:profile_page_test/profile/save_image_sql.dart';
 
 class ProfilePage extends StatefulWidget {
   static const profilePageName = '/profilepage';
+  static List<int>? mySports;
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -19,18 +23,30 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   File? _pickedImage;
-  void _selectImage(File pickedImage) {
+  String? imageUrl;
+
+  void _selectImage(File pickedImage) async {
     _pickedImage = pickedImage;
+    var uploadPic = await FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child('pic'
+            //userCredentials.user.uid + //vil ha dette med når vi har brukerid
+            '.jpg')
+        .putFile(_pickedImage);
+
+    var downloadUrl = await uploadPic.ref.getDownloadURL();
+    setState(() {
+      imageUrl = downloadUrl;
+    });
   }
 
   void _sendDataToProfilePage(
       BuildContext context,
-      TextEditingController nameInput,
       TextEditingController locationInput,
       TextEditingController descriptionInput) async {
-    print('svarte');
     //var imageData = await DBHelper.getData(DBHelper.tableName);
-    DBHelper.getData(DBHelper.tableName);
+    //DBHelper.getData(DBHelper.tableName); FJERNET HER
     //File imageText = await imageData[0][
     //   'image']; //Denne gir en null-verdi. Hvordan skal jeg vite hvor den skal settes?
     //print(imageText);
@@ -39,9 +55,9 @@ class _ProfilePageState extends State<ProfilePage> {
         context,
         MaterialPageRoute(
           builder: (context) => FinishedProfilePage(
-            name: nameInput.text,
             location: locationInput.text,
             description: descriptionInput.text,
+            profileImage: imageUrl!,
             //imageFile: imageText,
           ),
         ));
@@ -49,7 +65,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final nameInput = TextEditingController();
     final locationInput = TextEditingController();
     final descriptionInput = TextEditingController();
     return Scaffold(
@@ -67,22 +82,6 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: <Widget>[
             ImageInput(_selectImage),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                /* onChanged: (value) {
-                        amountInput = value;
-                      }, */
-                controller: nameInput,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Navn'),
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-                onSubmitted: (_) => {},
-                //keyboardType: TextInputType.number,
-              ),
-            ),
             Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
@@ -117,30 +116,52 @@ class _ProfilePageState extends State<ProfilePage> {
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                   hintText:
-                      'Her kan du legge til en liten beskrivelse av deg selv.',
+                      'Her kan du legge til en liten beskrivelse av deg selv (valgfritt).',
                 ),
                 style: TextStyle(
                   fontSize: 18,
                 ),
               ),
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: Colors.green,
-                //onSurface: Colors.grey,
-              ),
-              onPressed: () => _sendDataToProfilePage(
-                context,
-                nameInput,
-                locationInput,
-                descriptionInput,
-              ), //lagre profilen i en eller annen database
-
+            SizedBox(
+              height: 50,
               child: Text(
-                'Lagre din profil',
-                style: TextStyle(
-                  fontSize: 30,
+                'Trening du liker',
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+            SportItems(),
+            SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                  backgroundColor: Colors.green,
+                  //onSurface: Colors.grey,
+                ),
+                onPressed: () {
+                  FirebaseFirestore.instance.collection('Baluba_profiles').add({
+                    'location': locationInput.text,
+                    'description': descriptionInput.text,
+                    'imageUrl': imageUrl,
+                    'sports': ProfilePage.mySports,
+                  });
+
+                  _sendDataToProfilePage(
+                    context,
+                    locationInput,
+                    descriptionInput,
+                  );
+                }, //lagre profilen i en eller annen database
+
+                child: Text(
+                  'Lagre din profil',
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
                 ),
               ),
             ),
