@@ -1,12 +1,14 @@
 //Hva vil jeg gjøre her?
 //- lagre alt i collection 'workouts'
-
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:profile_page_test/workouts/make_workouts/submit_workout/submit_workout.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:profile_page_test/workouts/make_workouts/workouts.dart';
-import 'package:quiver/iterables.dart';
 
-void saveWorkout(NewFreeWorkout soonSavedWorkout) {
+void saveWorkout(NewFreeWorkout soonSavedWorkout, int signedUp) {
+  final user = FirebaseAuth.instance.currentUser;
   FirebaseFirestore.instance.collection('baluba_workouts').add({
     'title': soonSavedWorkout.workoutTitle,
     'createdAt': Timestamp.now(),
@@ -15,11 +17,14 @@ void saveWorkout(NewFreeWorkout soonSavedWorkout) {
     'longitude': soonSavedWorkout.longitude,
     'description': soonSavedWorkout.description,
     'difficulty': soonSavedWorkout.difficulty,
-    'date': soonSavedWorkout.date,
+    'date': DateFormat.yMMMd().format(soonSavedWorkout.date),
     'starttime':
         '${soonSavedWorkout.startTime.hour}:${soonSavedWorkout.startTime.minute}',
     'endtime':
         '${soonSavedWorkout.endTime.hour}:${soonSavedWorkout.endTime.minute}',
+    'signedup':
+        signedUp, //bør kanskje endre dette til personer som har signert at de ønsker å komme i en liste og heller telle antallet etter hvert.
+    'userID': user.uid,
   });
 }
 
@@ -38,8 +43,7 @@ void getWorkout(String title, double maxNumber, String description) async {
   print(allData);
 }
 
-
-  /*Stream snap = collection
+/*Stream snap = collection
       .orderBy(
         'createdAt',
       )

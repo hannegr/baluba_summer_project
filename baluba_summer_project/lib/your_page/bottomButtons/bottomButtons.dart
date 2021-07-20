@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:profile_page_test/workouts/make_workouts/workout_page.dart';
 
-class BottomButtons extends StatefulWidget {
+import '../side_bar.dart';
+
+class YourPage extends StatefulWidget {
+  static const yourPageName = '/yourpagename';
   @override
-  _BottomButtonsState createState() => _BottomButtonsState();
+  _YourPageState createState() => _YourPageState();
 }
 
-class _BottomButtonsState extends State<BottomButtons> {
+class _YourPageState extends State<YourPage> {
   void showPopupMenu(BuildContext ctx) {
     showMenu<String>(
       color: Theme.of(context).accentColor,
@@ -55,6 +58,7 @@ class _BottomButtonsState extends State<BottomButtons> {
       //},
     );
   }
+
   /* void settingsMenu() {
     showMenu<String>(
       context: context,
@@ -77,14 +81,25 @@ class _BottomButtonsState extends State<BottomButtons> {
       }
     });
   } */
-
   Widget build(BuildContext context) {
-    return (Container(
-      height: double.infinity,
-      width: double.infinity,
-      child: Stack(
-        children: <Widget>[
-          /*Container(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Din side'),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
+      drawer: Drawer(
+        child: Container(
+          color: Theme.of(context).accentColor,
+          child: SideBar(),
+        ),
+      ),
+      body: Center(
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Stack(
+            children: <Widget>[
+              /*Container(
             margin: EdgeInsets.only(top: 15),
             constraints: BoxConstraints.expand(height: 60),
             color: Colors.black,
@@ -104,64 +119,66 @@ class _BottomButtonsState extends State<BottomButtons> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[*/
-          SafeArea(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width / 2,
-                  alignment: Alignment.centerLeft,
-                  child: Center(
-                    child: Text(
-                      'Idretter',
-                      style: TextStyle(
-                        fontSize: 30,
+              SafeArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width / 2,
+                      alignment: Alignment.centerLeft,
+                      child: Center(
+                        child: Text(
+                          'Dine idretter',
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        //DecorationImage
+                        border: Border.all(
+                          color: Colors.red,
+                          width: 1,
+                        ), //Border.all
+                        //borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                  ),
-                  decoration: BoxDecoration(
-                    //DecorationImage
-                    border: Border.all(
-                      color: Colors.red,
-                      width: 1,
-                    ), //Border.all
-                    //borderRadius: BorderRadius.circular(25),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width / 2,
-                  alignment: Alignment.centerRight,
-                  child: Center(
-                    child: Text(
-                      'Økter',
-                      style: TextStyle(
-                        fontSize: 30,
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width / 2,
+                      alignment: Alignment.centerRight,
+                      child: Center(
+                        child: Text(
+                          'Dine økter',
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        //DecorationImage
+                        border: Border.all(
+                          color: Colors.red,
+                          width: 1,
+                        ), //Border.all
+                        //borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                  ),
-                  decoration: BoxDecoration(
-                    //DecorationImage
-                    border: Border.all(
-                      color: Colors.red,
-                      width: 1,
-                    ), //Border.all
-                    //borderRadius: BorderRadius.circular(15),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Align(
+                alignment: Alignment(0, 0.95),
+                child: FloatingActionButton(
+                  onPressed: () => showPopupMenu(context),
+                  child: Icon(Icons.add),
+                ),
+              ),
+            ],
           ),
-          Align(
-            alignment: Alignment(0, 0.95),
-            child: FloatingActionButton(
-              onPressed: () => showPopupMenu(context),
-              child: Icon(Icons.add),
-            ),
-          ),
-        ],
+        ),
       ),
-    ));
+    );
   }
 }

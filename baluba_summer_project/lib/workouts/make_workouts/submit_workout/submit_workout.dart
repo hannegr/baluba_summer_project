@@ -3,35 +3,13 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:profile_page_test/workouts/make_workouts/firebase_save_workout/save_workout.dart';
 import 'package:profile_page_test/workouts/make_workouts/submit_workout/submit_workout_functions.dart';
 import 'package:profile_page_test/workouts/make_workouts/workouts.dart';
-import 'package:quiver/collection.dart';
 
-void submitData(var workoutTitleInput, var locationInput, var maxNumberInput,
-    var startTime, var endTime, var date, var description) {
-  final workoutTitle = workoutTitleInput.text;
-  final location = locationInput.text;
-  final maxNumber = int.parse(maxNumberInput.text);
-  //final startT = DateFormat.Hm().format(startTime);
-  //final endT = DateFormat.Hm().format(endTime);
-
-  if (workoutTitle.isEmpty || location.isEmpty || maxNumber < 0) {
-    /*   ||
-      startT == null ||
-      endT == null) { */
-    return;
-  }
-
-  //widget.addTx(enteredTitle, enteredAmount, _selectedDate);
-  //Navigator.of(context).pop();
-}
-
-// ignore: must_be_immutable
 class SubmitWorkout extends StatefulWidget {
   static MapBoxPlace? finalLocation;
   @override
@@ -46,9 +24,6 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
   String? difficultyChosen;
 
   DateTime date = DateTime.now();
-  DateTime startTimeDate = DateTime.now();
-  DateTime endTimeDate = DateTime.now();
-
   TimeOfDay startTime = TimeOfDay(hour: 16, minute: 30);
   TimeOfDay endTime = TimeOfDay(hour: 18, minute: 30);
 
@@ -81,7 +56,6 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
 
         setState(
           () {
-            //ta dette med senere når du har statefulWidget hehe
             date = pickedDate;
           },
         );
@@ -142,17 +116,6 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          TextField(
-            controller: workoutTitleInput,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(), labelText: 'Tittel'),
-            style: TextStyle(
-              fontSize: 18,
-            ),
-            autocorrect: true,
-            onChanged: (titleValue) => {workout.workoutTitle = titleValue},
-          ),
-          SizedBox(height: 5),
           Container(
             width: double.infinity,
             height: 50,
@@ -191,6 +154,18 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
               ),
             ),
           ),
+          SizedBox(height: 5),
+          TextField(
+            controller: workoutTitleInput,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(), labelText: 'Tittel'),
+            style: TextStyle(
+              fontSize: 18,
+            ),
+            autocorrect: true,
+            onChanged: (titleValue) => {workout.workoutTitle = titleValue},
+          ),
+          SizedBox(height: 5),
           TextField(
             controller: maxNumberInput,
             decoration: InputDecoration(
@@ -294,9 +269,7 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
                               difficultyChosen == describeEnum(Difficulty.enkel)
                                   ? Colors.red
                                   : Colors.green,
-                          //onSurface: Colors.grey,
                         ),
-                        //style: TextButton.styleFrom(primary: Colors.black),
                         onPressed: () {
                           workout.difficulty = describeEnum(Difficulty.enkel);
 
@@ -398,9 +371,8 @@ class SubmitWorkoutState extends State<SubmitWorkout> {
                 onPressed: () {
                   print(
                       '${workout.workoutTitle} ${workout.date} ${workout.maxNumber} ${workout.description} ${workout.difficulty} ${workout.date} ${workout.startTime} ${workout.endTime} ${workout.latitude}');
-                  saveWorkout(workout);
-                  //getWorkout();
-                  //Gå til en ny side som viser dine økter, for å vise at økten er registrert der
+                  saveWorkout(workout, 1);
+                  SubmitFunctions.goToYourWorkouts(context);
                 },
               ))
         ],

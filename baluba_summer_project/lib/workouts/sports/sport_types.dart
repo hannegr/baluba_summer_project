@@ -1,4 +1,4 @@
-import 'package:color/color.dart';
+//import 'package:color/color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page_test/profile/make_profile_page.dart';

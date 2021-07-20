@@ -1,7 +1,5 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:mapbox_search/mapbox_search.dart';
 
 enum Difficulty {
   enkel,
@@ -34,6 +32,5 @@ class NewFreeWorkout {
     required this.endTime,
     required this.startTime,
     required this.difficulty,
-    //required this.workoutId, not yet
   });
 }

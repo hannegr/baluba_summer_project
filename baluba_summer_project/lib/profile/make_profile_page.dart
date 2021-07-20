@@ -1,6 +1,10 @@
 import 'dart:ui';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_auth/firebase_auth.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,6 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     final locationInput = TextEditingController();
     final descriptionInput = TextEditingController();
     return Scaffold(
@@ -148,6 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     'description': descriptionInput.text,
                     'imageUrl': imageUrl,
                     'sports': ProfilePage.mySports,
+                    'userID': user.uid,
                   });
 
                   _sendDataToProfilePage(

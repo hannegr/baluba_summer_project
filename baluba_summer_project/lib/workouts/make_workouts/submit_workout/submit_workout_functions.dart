@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_search/mapbox_search.dart';
 import 'package:profile_page_test/workouts/make_workouts/map_with_mapbox/map_widget_page.dart';
 import 'package:profile_page_test/workouts/make_workouts/map_with_mapbox/search_for_place.dart';
+
+import '../../your_workouts_page.dart';
 
 class SubmitFunctions {
   static void goToMapsPage(BuildContext ctx) {
@@ -10,6 +11,13 @@ class SubmitFunctions {
       MapWidgetPage.mapWidgetPageName,
       //arguments: { kanskje senere
       //},
+    );
+  }
+
+  static void goToYourWorkouts(BuildContext ctx) {
+    Navigator.of(ctx).pop();
+    Navigator.of(ctx).pushNamed(
+      YourWorkoutsPage.yourSignedUpWorkoutspage,
     );
   }
 

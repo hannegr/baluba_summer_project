@@ -1,10 +1,9 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:mapbox_search/mapbox_search.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:profile_page_test/workouts/make_workouts/submit_workout/submit_workout.dart';
-import 'package:quiver/async.dart';
 
 import '../workout_page.dart';
 import 'map_widget_page.dart';

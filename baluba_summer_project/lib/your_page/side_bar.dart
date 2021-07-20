@@ -1,6 +1,9 @@
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page_test/profile/make_profile_page.dart';
 import 'package:profile_page_test/user_authentication/log_in.dart';
+import 'package:profile_page_test/workouts/make_workouts/submit_workout/submit_workout_functions.dart';
 
 class SideBar extends StatelessWidget {
   void _goToProfilePage(BuildContext ctx) {
@@ -17,6 +20,10 @@ class SideBar extends StatelessWidget {
       //arguments: { kanskje senere
       //},
     );
+  }
+
+  void _signOut() async {
+    FirebaseAuth.instance.signOut();
   }
 
   Widget buildListTile(String title, IconData icon,
@@ -66,20 +73,21 @@ class SideBar extends StatelessWidget {
               ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              //mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
+                buildListTile('Logg inn', Icons.person,
+                    () => _goToLoginPage(context), context),
                 buildListTile('Utforsk', Icons.search, () {}, context),
-                buildListTile('Dine økter', Icons.sports, () {}, context),
+                buildListTile('Dine økter', Icons.sports,
+                    () => SubmitFunctions.goToYourWorkouts(context), context),
                 buildListTile(
                     'Finn venner', Icons.person_search, () {}, context),
                 buildListTile('Innstillinger', Icons.settings, () {}, context),
                 buildListTile('Profil', Icons.person,
                     () => _goToProfilePage(context), context),
+                buildListTile('Logg ut', Icons.logout, _signOut, context),
               ],
             ),
-            buildListTile('Logg ut', Icons.logout, () {}, context),
-            buildListTile('Logg inn', Icons.person,
-                () => _goToLoginPage(context), context),
           ],
         ),
       ),
